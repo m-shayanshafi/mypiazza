@@ -11,7 +11,6 @@ cthreads = [
     {:title => "hw2", :posted_on => '10-Feb-2016'},
     {:title => "hw3", :posted_on => '20-Feb-2016'}
 ]
-
 questions = [
     {heading: "when is it due?", statement: "i wanted to ask about the
         due date of the assignment", posted_by: "anon"},
@@ -37,3 +36,17 @@ seed_courses = [
     crs.cthreads.create cthreads[1]
     crs.cthreads.create cthreads[2]
  end
+
+user = User.new
+user.email = 'shayan@gmail.com'
+user.name = 'Shayan Shafi'
+user.password = 'shayanshafi'
+user.password_confirmation = 'shayanshafi'
+
+user.save!
+user = User.new
+user.email = 'shayan@yahoo.com'
+user.password = 'shayanshafi'
+user.password_confirmation = 'shayanshafi'
+user.name = 'Shayan Super Shafi'
+user.save!

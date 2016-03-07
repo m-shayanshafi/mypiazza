@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307131420) do
+ActiveRecord::Schema.define(version: 20160307195333) do
 
   create_table "courses", force: :cascade do |t|
     t.string   "cnum"
@@ -36,12 +36,13 @@ ActiveRecord::Schema.define(version: 20160307131420) do
     t.integer  "cthread_id"
     t.string   "heading"
     t.string   "statement"
-    t.string   "posted_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "questions", ["cthread_id"], name: "index_questions_on_cthread_id"
+  add_index "questions", ["user_id"], name: "index_questions_on_user_id"
 
   create_table "responses", force: :cascade do |t|
     t.integer  "question_id"
@@ -49,9 +50,11 @@ ActiveRecord::Schema.define(version: 20160307131420) do
     t.string   "posted_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "responses", ["question_id"], name: "index_responses_on_question_id"
+  add_index "responses", ["user_id"], name: "index_responses_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -66,6 +69,7 @@ ActiveRecord::Schema.define(version: 20160307131420) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

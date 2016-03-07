@@ -13,6 +13,12 @@ class CthreadsController < ApplicationController
         @course = Course.find_by_id(params[:course_id]);
         @cthread = @course.cthreads.find_by_id(params[:id]);
         @questions = @cthread.questions
+        @user_names=Hash.new()
+        @questions.each do |question|
+            id=question.user_id
+            user=User.find_by_id(id);
+            @user_names[id]=user.name
+        end
        
         # redirecting if invalid path in URI
         redirect_invalid(@course, @cthread, params)

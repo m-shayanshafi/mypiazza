@@ -21,8 +21,10 @@ class ResponsesController < ApplicationController
 
         r_params = response_params
         r_params[:question_id] = params[:question_id]
-
+        # r_params[:user_id]
         @response = @question.responses.create! r_params
+        @response.user=current_user
+        @response.save
         flash[:notice] = "Answer for #{@question.heading}, #{@cthread.title}, #{@course.title} was successfully posted."
         
         redirect_to course_cthread_question_path(@course, @cthread, @question)

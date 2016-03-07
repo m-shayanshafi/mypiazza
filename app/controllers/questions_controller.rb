@@ -1,10 +1,19 @@
 class QuestionsController < ApplicationController
+    # load_and_authorize_resource
     def show
         # accessing variables
         @course = Course.find_by_id(params[:course_id]);
         @cthread = Cthread.find_by_id(params[:cthread_id]);
         @question = Question.find_by_id(params[:id])
+        @question_by=User.find_by_id(@question.user_id).name
+        # @users=@question.users
         @responses = @question.responses
+        @user_names=Hash.new()
+        @responses.each do |question|
+            id=question.user_id
+            user=User.find_by_id(id);
+            @user_names[id]=user.name
+        end
     end
 
     def new
@@ -19,8 +28,11 @@ class QuestionsController < ApplicationController
 
         q_params = question_params
         q_params[:cthread_id] = params[:cthread_id]
-
+        # q_params[:user_id] = current_user
         @question = @cthread.questions.create! q_params
+        @question.user=current_user;
+        @question.save
+        
         flash[:notice] = "Question for #{@cthread.title}, #{@course.title} was successfully created."
         
         redirect_to course_cthread_path(@course, @cthread)
